@@ -1,0 +1,5 @@
+{% for album in albums %}
+    <div>
+        <a href="/album/{{album.id}}">{{album.artist}} - {{album.title}}</a>
+    </div>
+{% endfor %}
