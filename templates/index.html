@@ -1,5 +1,47 @@
+<html ng-app="borscht">
+<head>
+<script type="text/javascript" src="/static/angular.js"></script>
+<script type="text/javascript" src="/static/borscht.js"></script>
+<style>
+.column {
+    position: absolute;
+    top: 0px;
+    width: 33%;
+    height: 100%;
+    overflow: scroll;
+}
+.playing {
+    background-color: yellow;
+}
+</style>
+</head>
+<body ng-controller="BorschtCtrl">
+    <audio id="audioPlayer" controls autoplay></audio>
+{% raw %}
+    <div id="fillHeight" style="position:relative">
+    <div class="column">
+        <div ng-repeat="artist in artists">
+            <h3>{{artist.name}}</h3>
+            <div ng-repeat="album in artist.albums">
+                <a ng-click="showAlbum(album)">{{album.title}}</a>
+            </div>
+        </div>
+    </div>
+    <div class="column" style="left:33%" ng-if="thisAlbum">
+        <div ng-if="!thisAlbum.tracks">Loading...</div>
+        <div ng-repeat="track in thisAlbum.tracks" ng-click="playTrack($index)" ng-class="{playing: track.playing}">
+            {{track.tracknum}} - {{track.title}}
+        </div>
+    </div>
+    <div class="column" style="left:66%">
+    </div>
+    </div>
+{% endraw %}
+
+
 {% for album in albums %}
     <div>
         <a href="/album/{{album.id}}">{{album.artist}} - {{album.title}}</a>
     </div>
 {% endfor %}
+</body>

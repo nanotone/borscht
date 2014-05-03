@@ -1,4 +1,3 @@
-#hello
 import subprocess
 
 import flask
@@ -11,6 +10,10 @@ def run(cmd):
 
 @app.route('/')
 def index():
+    return flask.render_template('index.html', albums=[])
+
+@app.route('/albums')
+def albums():
     albums = []
     for line in run('beet list -a -f $id|$album|$albumartist'):
         (albumid, album, artist) = line.split('|')
@@ -19,7 +22,7 @@ def index():
             'title': album,
             'artist': artist,
         })
-    return flask.render_template('index.html', albums=albums)
+    return flask.jsonify({'albums': albums})
 
 @app.route('/album/<albumid>')
 def album(albumid):
@@ -32,7 +35,7 @@ def album(albumid):
             'title': title,
         })
     tracks.sort(key=lambda t: t['tracknum'])
-    return flask.render_template('album.html', tracks=tracks)
+    return flask.jsonify({'tracks': tracks})
 
 @app.route('/file/<itemid>')
 def get_file(itemid):
@@ -42,8 +45,7 @@ def get_file(itemid):
         flask.abort(404)
     path = lines[0]
     assert path.startswith('/home/yang/music/')
-    path = path.replace('/home/yang/music/', 'music/')
-    return flask.redirect(u'/static/' + path)
+    return flask.redirect(path.replace('/home/yang', ''))
 
 if __name__ == '__main__':
     app.debug = True
