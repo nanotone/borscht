@@ -1,26 +1,3 @@
-
-
-
-var makeClickHandler = function(idx, track) {
-    return function(e) {
-        playTrack(idx);
-    };
-};
-
-/*
-$(function() {
-    for (var i = 0; i < tracks.length; i++) {
-        var track = tracks[i];
-        var $track = $('<a></a>');
-        $track.text(track.title);
-        $track.on('click', makeClickHandler(i, track));
-        var $div = $('<div></div>');
-        $div.append($track);
-        $('body').append($div);
-    }
-});
-*/
-
 angular.module('borscht', [])
 .controller('BorschtCtrl', ['$http', '$scope', function($http, $scope) {
 
@@ -94,7 +71,14 @@ angular.module('borscht', [])
         playing = {album: $scope.thisAlbum, idx: idx, track: track};
         track.playing = true;
     };
+}])
 
-    var fillHeight = document.getElementById('fillHeight');
-    angular.element(fillHeight).css({height: window.innerHeight - fillHeight.getBoundingClientRect().top - 8});
+.directive('fillWindowHeight', ['$window', function($window) {
+    return {
+        restrict: 'A',
+        link: function($scope, element, attrs) {
+            console.log("link");
+            element.css({height: $window.innerHeight - element[0].getBoundingClientRect().top - 8});
+        }
+    };
 }])

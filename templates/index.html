@@ -18,23 +18,25 @@
 <body ng-controller="BorschtCtrl">
     <audio id="audioPlayer" controls autoplay></audio>
 {% raw %}
-    <div id="fillHeight" style="position:relative">
-    <div class="column">
-        <div ng-repeat="artist in artists">
-            <h3>{{artist.name}}</h3>
-            <div ng-repeat="album in artist.albums">
-                <a ng-click="showAlbum(album)">{{album.title}}</a>
+    <div fill-window-height style="position:relative">
+        <div class="column">
+            <div ng-repeat="artist in artists">
+                <h3>{{artist.name}}</h3>
+                <div ng-repeat="album in artist.albums">
+                    <a ng-click="showAlbum(album)">{{album.title}}</a>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="column" style="left:33%" ng-if="thisAlbum">
-        <div ng-if="!thisAlbum.tracks">Loading...</div>
-        <div ng-repeat="track in thisAlbum.tracks" ng-click="playTrack($index)" ng-class="{playing: track.playing}">
-            {{track.tracknum}} - {{track.title}}
+
+        <div class="column" style="left:33%" ng-if="thisAlbum">
+            <div ng-if="!thisAlbum.tracks">Loading...</div>
+            <div ng-repeat="track in thisAlbum.tracks" ng-click="playTrack($index)" ng-class="{playing: track.playing}">
+                {{track.tracknum}} - {{track.title}}
+            </div>
         </div>
-    </div>
-    <div class="column" style="left:66%">
-    </div>
+
+        <div class="column" style="left:66%">
+        </div>
     </div>
 {% endraw %}
 
