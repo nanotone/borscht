@@ -29,6 +29,7 @@
         </div>
 
         <div class="column" style="left:33%" ng-if="thisAlbum">
+            <h3>{{thisAlbum.title}}</h3>
             <div ng-if="!thisAlbum.tracks">Loading...</div>
             <div ng-repeat="track in thisAlbum.tracks" ng-click="playTrack($index)" ng-class="{playing: track.playing}">
                 {{track.tracknum}} - {{track.title}}
